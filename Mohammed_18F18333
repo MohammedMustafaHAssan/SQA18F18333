@@ -1,0 +1,39 @@
+public class CarSparePartsStore {
+  private String name;
+  private String address;
+  private Map<String, Integer> inventory;
+  private Map<String, Integer> prices;
+
+  public CarSparePartsStore(String name, String address) {
+    this.name = name;
+    this.address = address;
+    this.inventory = new HashMap<>();
+    this.prices = new HashMap<>();
+  }
+
+  public void addItemToInventory(String item, int quantity, int price) {
+    inventory.put(item, quantity);
+    prices.put(item, price);
+  }
+
+  public void sellItem(String item, int quantity) {
+    int currentQuantity = inventory.get(item);
+    if (currentQuantity < quantity) {
+      System.out.println("Sorry, we do not have enough of that item in stock.");
+      return;
+    }
+    inventory.put(item, currentQuantity - quantity);
+    int price = prices.get(item);
+    int totalPrice = price * quantity;
+    System.out.println("Selling " + quantity + " " + item + " for a total of $" + totalPrice);
+  }
+
+  public void printInventory() {
+    System.out.println("Welcome to " + name + "!");
+    System.out.println("We are located at " + address + ".");
+    System.out.println("Here is our current inventory: ");
+    for (String item : inventory.keySet()) {
+      System.out.println(item + " - Quantity: " + inventory.get(item) + " - Price: $" + prices.get(item));
+    }
+  }
+}
